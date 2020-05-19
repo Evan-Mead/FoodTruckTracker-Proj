@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FoodTruckTracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/cyborg.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body{
+            background-image: url("/pics/HomePage.jpg");
+            background-attachment:fixed
+        }
+
+        #map{
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
