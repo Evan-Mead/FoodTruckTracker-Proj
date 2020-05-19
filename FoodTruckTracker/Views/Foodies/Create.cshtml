@@ -1,4 +1,4 @@
-﻿@model FoodTruckTracker.Models.FoodTruck
+﻿@model FoodTruckTracker.Models.Foodie
 
 @{
     ViewData["Title"] = "Create";
@@ -7,16 +7,16 @@
 
 <h1>Create</h1>
 
-<h4>FoodTruck</h4>
+<h4>Foodie</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FoodTruckName" class="control-label"></label>
-                <input asp-for="FoodTruckName" class="form-control" />
-                <span asp-validation-for="FoodTruckName" class="text-danger"></span>
+                <label asp-for="FoodieName" class="control-label"></label>
+                <input asp-for="FoodieName" class="form-control" />
+                <span asp-validation-for="FoodieName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="IdentityUserId" class="control-label"></label>

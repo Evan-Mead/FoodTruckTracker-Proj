@@ -11,25 +11,38 @@ using System.Security.Claims;
 
 namespace FoodTruckTracker.Controllers
 {
-    public class FoodTrucksController : Controller
+    public class FoodiesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public FoodTrucksController(ApplicationDbContext context)
+        public FoodiesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: FoodTrucks
+        // GET: Foodies
         public async Task<IActionResult> Index()
         {
+            FoodieViewFoodTrucks foodieViewFoodTrucks = new FoodieViewFoodTrucks();
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var foodTruck = _context.FoodTrucks.Where(f => f.IdentityUserId == userId).SingleOrDefault();
-            var applicationDbContext = _context.FoodTrucks.Include(f => f.IdentityUser);
-            return View(foodTruck);
+            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.IdentityUserId).ToList();
+            return View(foodieViewFoodTrucks);
         }
 
-        // GET: FoodTrucks/Details/5
+        // POST: Foodies
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(FoodieViewFoodTrucks foodieViewFoodTrucks)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.IdentityUserId).ToList();
+            return View(foodieViewFoodTrucks);
+        }
+
+        // GET: Foodies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,44 +50,42 @@ namespace FoodTruckTracker.Controllers
                 return NotFound();
             }
 
-            var foodTruck = await _context.FoodTrucks
+            var foodie = await _context.Foodies
                 .Include(f => f.IdentityUser)
-                .FirstOrDefaultAsync(m => m.FoodTruckId == id);
-            if (foodTruck == null)
+                .FirstOrDefaultAsync(m => m.FoodieId == id);
+            if (foodie == null)
             {
                 return NotFound();
             }
 
-            return View(foodTruck);
+            return View(foodie);
         }
 
-        // GET: FoodTrucks/Create
+        // GET: Foodies/Create
         public IActionResult Create()
         {
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: FoodTrucks/Create
+        // POST: Foodies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FoodTruckId,FoodTruckName,IdentityUserId")] FoodTruck foodTruck)
+        public async Task<IActionResult> Create([Bind("FoodieId,FoodieName,IdentityUserId")] Foodie foodie)
         {
             if (ModelState.IsValid)
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                foodTruck.IdentityUserId = userId;
-                _context.Add(foodTruck);
+                _context.Add(foodie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodTruck.IdentityUserId);
-            return View(foodTruck);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodie.IdentityUserId);
+            return View(foodie);
         }
 
-        // GET: FoodTrucks/Edit/5
+        // GET: Foodies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,23 +93,23 @@ namespace FoodTruckTracker.Controllers
                 return NotFound();
             }
 
-            var foodTruck = await _context.FoodTrucks.FindAsync(id);
-            if (foodTruck == null)
+            var foodie = await _context.Foodies.FindAsync(id);
+            if (foodie == null)
             {
                 return NotFound();
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodTruck.IdentityUserId);
-            return View(foodTruck);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodie.IdentityUserId);
+            return View(foodie);
         }
 
-        // POST: FoodTrucks/Edit/5
+        // POST: Foodies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FoodTruckId,FoodTruckName,IdentityUserId")] FoodTruck foodTruck)
+        public async Task<IActionResult> Edit(int id, [Bind("FoodieId,FoodieName,IdentityUserId")] Foodie foodie)
         {
-            if (id != foodTruck.FoodTruckId)
+            if (id != foodie.FoodieId)
             {
                 return NotFound();
             }
@@ -107,12 +118,12 @@ namespace FoodTruckTracker.Controllers
             {
                 try
                 {
-                    _context.Update(foodTruck);
+                    _context.Update(foodie);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FoodTruckExists(foodTruck.FoodTruckId))
+                    if (!FoodieExists(foodie.FoodieId))
                     {
                         return NotFound();
                     }
@@ -123,11 +134,11 @@ namespace FoodTruckTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodTruck.IdentityUserId);
-            return View(foodTruck);
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", foodie.IdentityUserId);
+            return View(foodie);
         }
 
-        // GET: FoodTrucks/Delete/5
+        // GET: Foodies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,31 +146,31 @@ namespace FoodTruckTracker.Controllers
                 return NotFound();
             }
 
-            var foodTruck = await _context.FoodTrucks
+            var foodie = await _context.Foodies
                 .Include(f => f.IdentityUser)
-                .FirstOrDefaultAsync(m => m.FoodTruckId == id);
-            if (foodTruck == null)
+                .FirstOrDefaultAsync(m => m.FoodieId == id);
+            if (foodie == null)
             {
                 return NotFound();
             }
 
-            return View(foodTruck);
+            return View(foodie);
         }
 
-        // POST: FoodTrucks/Delete/5
+        // POST: Foodies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var foodTruck = await _context.FoodTrucks.FindAsync(id);
-            _context.FoodTrucks.Remove(foodTruck);
+            var foodie = await _context.Foodies.FindAsync(id);
+            _context.Foodies.Remove(foodie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FoodTruckExists(int id)
+        private bool FoodieExists(int id)
         {
-            return _context.FoodTrucks.Any(e => e.FoodTruckId == id);
+            return _context.Foodies.Any(e => e.FoodieId == id);
         }
     }
 }

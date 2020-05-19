@@ -12,7 +12,7 @@ namespace FoodTruckTracker.Models
     {
         [Key]
         public int FoodTruckId { get; set; }
-        public string Name { get; set; }
+        public string FoodTruckName { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }

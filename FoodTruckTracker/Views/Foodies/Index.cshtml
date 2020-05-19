@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FoodTruckTracker.Models.FoodTruck>
+﻿@model IEnumerable<FoodTruckTracker.Models.Foodie>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FoodTruckName)
+                @Html.DisplayNameFor(model => model.FoodieName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdentityUser)
@@ -26,15 +26,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FoodTruckName)
+                @Html.DisplayFor(modelItem => item.FoodieName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FoodTruckId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FoodTruckId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FoodTruckId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.FoodieId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FoodieId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FoodieId">Delete</a>
             </td>
         </tr>
 }

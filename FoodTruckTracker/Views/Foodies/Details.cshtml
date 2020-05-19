@@ -1,4 +1,4 @@
-﻿@model FoodTruckTracker.Models.FoodTruck
+﻿@model FoodTruckTracker.Models.Foodie
 
 @{
     ViewData["Title"] = "Details";
@@ -8,14 +8,14 @@
 <h1>Details</h1>
 
 <div>
-    <h4>FoodTruck</h4>
+    <h4>Foodie</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FoodTruckName)
+            @Html.DisplayNameFor(model => model.FoodieName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FoodTruckName)
+            @Html.DisplayFor(model => model.FoodieName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdentityUser)
@@ -26,6 +26,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.FoodTruckId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.FoodieId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
