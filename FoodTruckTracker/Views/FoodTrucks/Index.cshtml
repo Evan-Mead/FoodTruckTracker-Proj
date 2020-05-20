@@ -1,42 +1,67 @@
-﻿@model IEnumerable<FoodTruckTracker.Models.FoodTruck>
+﻿@model FoodTruckTracker.Models.FoodTruck
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Details</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FoodTruckName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdentityUser)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodTruckName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdentityUser.Id)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.FoodTruckId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FoodTruckId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FoodTruckId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div>
+    <h4>Food Truck</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FoodTruckName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FoodTruckName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProfileViews)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProfileViews)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Longitude)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CuisineType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CuisineType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TruckHistory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TruckHistory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TruckCrew)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TruckCrew)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdentityUser)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdentityUser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.FoodTruckId">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.FoodTruckId">Delete</a>
+</div>

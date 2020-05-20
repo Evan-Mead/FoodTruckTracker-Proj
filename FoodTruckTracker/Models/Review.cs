@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace FoodTruckTracker.Models
 {
-    public class FoodTruck
+    public class Review
     {
         [Key]
-        public int FoodTruckId { get; set; }
-        public string FoodTruckName { get; set; }
-        public double ProfileViews { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public string CuisineType { get; set; }
-        public string TruckHistory { get; set; }
-        public string TruckCrew { get; set; }
+        public int ReviewId { get; set; }
+        public string Description { get; set; }
+        public int Rating { get; set; }
+
+        [ForeignKey("FoodTruck")]
+        public string FoodTruckId { get; set; }
+        public FoodTruck FoodTruck { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
