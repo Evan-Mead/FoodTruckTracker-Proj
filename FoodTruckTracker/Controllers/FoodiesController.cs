@@ -27,7 +27,7 @@ namespace FoodTruckTracker.Controllers
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
-            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.IdentityUserId).ToList();
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.FoodieName).ToList();
             return View(foodieViewFoodTrucks);
         }
 
@@ -38,7 +38,7 @@ namespace FoodTruckTracker.Controllers
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
-            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.IdentityUserId).ToList();
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.FoodieName).ToList();
             return View(foodieViewFoodTrucks);
         }
 
