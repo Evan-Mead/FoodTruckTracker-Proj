@@ -21,13 +21,13 @@ namespace FoodTruckTracker.ActionFilters
             var controller = context.RouteData.Values["controller"];
             if (controller.Equals("Home"))
             {
-                if (_claimsPrincipal.IsInRole("Food Truck"))
+                if (_claimsPrincipal.IsInRole("FoodTruck"))
                 {
-                    context.Result = new RedirectToActionResult("Index", "Food Truck", null);
+                    context.Result = new RedirectToActionResult("Index", "FoodTrucks", null);
                 }
                 else if (_claimsPrincipal.IsInRole("Foodie"))
                 {
-                    context.Result = new RedirectToActionResult("Index", "Foodie", null);
+                    context.Result = new RedirectToActionResult("Index", "Foodies", null);
                 }
             }
         }

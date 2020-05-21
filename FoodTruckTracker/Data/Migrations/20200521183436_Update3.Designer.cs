@@ -4,14 +4,16 @@ using FoodTruckTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FoodTruckTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200521183436_Update3")]
+    partial class Update3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,15 +108,15 @@ namespace FoodTruckTracker.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25c3d5cc-9ee1-4289-8a15-a57729b7cd41",
-                            ConcurrencyStamp = "e27aa74a-75ba-4e1d-8166-8366cb4f94ed",
-                            Name = "FoodTruck",
-                            NormalizedName = "FOODTRUCK"
+                            Id = "f9e8aa91-8412-4233-ac2c-136d8aa1de3f",
+                            ConcurrencyStamp = "76c79342-33c6-495e-9730-eb8206108db5",
+                            Name = "Food Truck",
+                            NormalizedName = "FOOD TRUCK"
                         },
                         new
                         {
-                            Id = "dca7c437-4668-4ed4-bcb9-0ac02137acc7",
-                            ConcurrencyStamp = "fc60f6b9-515b-4385-957f-c493a1301bd1",
+                            Id = "4f0bcb78-3072-4dd1-a0f5-6e736d42a066",
+                            ConcurrencyStamp = "1b0a3f31-1daa-467a-846a-b1f4a9a8530c",
                             Name = "Foodie",
                             NormalizedName = "FOODIE"
                         });

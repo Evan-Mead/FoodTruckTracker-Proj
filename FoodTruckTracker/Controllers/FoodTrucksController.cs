@@ -12,6 +12,7 @@ using System.Security.Claims;
 
 namespace FoodTruckTracker.Controllers
 {
+    [Authorize(Roles = "FoodTruck")]
     public class FoodTrucksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -61,7 +62,7 @@ namespace FoodTruckTracker.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FoodTruckId,FoodTruckName,IdentityUserId")] FoodTruck foodTruck)
+        public async Task<IActionResult> Create([Bind("FoodTruckId,FoodTruckName,ProfileViews,Latitude,Longitude,CuisineType,TruckHistory,TruckCrew,IdentityUserId")] FoodTruck foodTruck)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +98,7 @@ namespace FoodTruckTracker.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FoodTruckId,FoodTruckName,IdentityUserId")] FoodTruck foodTruck)
+        public async Task<IActionResult> Edit(int id, [Bind("FoodTruckId,FoodTruckName,ProfileViews,Latitude,Longitude,CuisineType,TruckHistory,TruckCrew,IdentityUserId")] FoodTruck foodTruck)
         {
             if (id != foodTruck.FoodTruckId)
             {

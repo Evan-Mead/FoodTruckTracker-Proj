@@ -20,6 +20,14 @@ namespace FoodTruckTracker.Controllers
 
         public IActionResult Index()
         {
+            //if (User.IsInRole("FoodTruck"))
+            //{
+            //    return RedirectToAction("Create", "FoodTrucksController");
+            //}
+            //else if (User.IsInRole("Foodie"))
+            //{
+            //    return RedirectToAction("Create", "FoodiesController");
+            //}
             return View();
         }
 

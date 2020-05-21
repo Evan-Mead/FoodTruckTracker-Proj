@@ -22,7 +22,7 @@ namespace FoodTruckTracker.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Food Truck", NormalizedName = "FOOD TRUCK" });
+            builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "FoodTruck", NormalizedName = "FOODTRUCK" });
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Foodie", NormalizedName = "FOODIE" });
         }
     }
