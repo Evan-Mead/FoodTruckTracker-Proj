@@ -23,10 +23,13 @@ namespace FoodTruckTracker.Controllers
         // GET: Foodies
         public async Task<IActionResult> Index()
         {
+            FoodieViewFoodTrucks foodieViewFoodTrucks = new FoodieViewFoodTrucks();
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
             var applicationDbContext = _context.Foodies.Include(f => f.IdentityUser);
-            return View(foodie);
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.ToList();
+            return View(foodieViewFoodTrucks);
         }
 
         // POST: Foodies
@@ -35,9 +38,10 @@ namespace FoodTruckTracker.Controllers
         public async Task<IActionResult> Index(FoodieViewFoodTrucks foodieViewFoodTrucks)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
             var applicationDbContext = _context.Foodies.Include(f => f.IdentityUser);
-            return View(foodie);
+            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.ToList();
+            return View(foodieViewFoodTrucks);
         }
 
         // GET: Foodies/Details/5
