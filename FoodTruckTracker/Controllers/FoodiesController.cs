@@ -23,12 +23,10 @@ namespace FoodTruckTracker.Controllers
         // GET: Foodies
         public async Task<IActionResult> Index()
         {
-            FoodieViewFoodTrucks foodieViewFoodTrucks = new FoodieViewFoodTrucks();
-
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
-            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.FoodieName).ToList();
-            return View(foodieViewFoodTrucks);
+            var foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            var applicationDbContext = _context.Foodies.Include(f => f.IdentityUser);
+            return View(foodie);
         }
 
         // POST: Foodies
@@ -37,9 +35,9 @@ namespace FoodTruckTracker.Controllers
         public async Task<IActionResult> Index(FoodieViewFoodTrucks foodieViewFoodTrucks)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            foodieViewFoodTrucks.Foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
-            foodieViewFoodTrucks.FoodTrucks = _context.FoodTrucks.Where(f => f.FoodTruckName == foodieViewFoodTrucks.Foodie.FoodieName).ToList();
-            return View(foodieViewFoodTrucks);
+            var foodie = _context.Foodies.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+            var applicationDbContext = _context.Foodies.Include(f => f.IdentityUser);
+            return View(foodie);
         }
 
         // GET: Foodies/Details/5
@@ -77,6 +75,8 @@ namespace FoodTruckTracker.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                foodie.IdentityUserId = userId;
                 _context.Add(foodie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
