@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FoodTruckTracker.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace FoodTruckTracker.Controllers
 {
@@ -16,6 +18,35 @@ namespace FoodTruckTracker.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+        }
+
+        public async Task<IActionResult> DisplayMap()
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:44312");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                ViewBag.country = "";
+                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/home");
+
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DisplayMap(FoodieViewFoodTrucks foodieViewFoodTrucks)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:44312");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                ViewBag.country = "";
+                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/home");
+
+                return View();
+            }
         }
 
         public IActionResult Index()
