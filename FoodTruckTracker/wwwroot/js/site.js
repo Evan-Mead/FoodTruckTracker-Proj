@@ -64,7 +64,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: 'http://localhost:44312/home',
+            url: 'http://localhost:44312/foodtrucktracker/home',
             dataType: 'json',
             type: 'get',
             contentType: 'application/json',
@@ -94,7 +94,7 @@
             },
             error: function (jqXhr, textStatus, errorThrown) {
                 console.log(errorThrown);
-                console.log("It didn't work!");
+                console.log("Try again.");
             }
         });
 

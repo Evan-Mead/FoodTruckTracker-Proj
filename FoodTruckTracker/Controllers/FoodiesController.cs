@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using FoodTruckTracker.Data;
 using FoodTruckTracker.Models;
 using System.Security.Claims;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace FoodTruckTracker.Controllers
 {
@@ -175,6 +179,66 @@ namespace FoodTruckTracker.Controllers
         private bool FoodieExists(int id)
         {
             return _context.Foodies.Any(e => e.FoodieId == id);
+        }
+
+        public IActionResult CreateReview(int foodTruckId)
+        {
+            ViewBag.FoodTruckId = foodTruckId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateReview(Review review)
+        {
+            try
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                FoodTruck foodTruck = _context.FoodTrucks.Where(f => f.IdentityUserId == userId).SingleOrDefault();
+                review.FoodTruckId = foodTruck.FoodTruckId;
+
+                using (var httpClient = new HttpClient())
+                {
+                    StringContent content = new StringContent(JsonConvert.SerializeObject(review), Encoding.UTF8, "application/json");
+                    using (var response = await httpClient.PostAsync("http://localhost:44312/foodtrucktracker/reviews", content)) ;
+                }
+                return RedirectToAction("ViewReviews", new { foodTruckId = review.FoodTruckId });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> ViewReviews(int foodTruckId)
+        {
+            ViewBag.FoodTruckId = foodTruckId;
+            List<Review> foodTruckReviews = new List<Review>();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:44312/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("applications/json"));
+                ViewBag.country = "";
+                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/foodtrucktracker/reviews");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var details = await response.Content.ReadAsAsync<IEnumerable<Review>>();
+                    foreach(Review review in details)
+                    {
+                        if (review.FoodTruckId == foodTruckId)
+                        {
+                            foodTruckReviews.Add(review);
+                        }
+                    }
+                    return View(foodTruckReviews);
+                }
+                else
+                {
+                    return View();
+                }
+            }
         }
     }
 }

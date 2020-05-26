@@ -28,7 +28,7 @@ namespace FoodTruckTracker.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 ViewBag.country = "";
-                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/home");
+                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/foodtrucktracker/home");
 
                 return View();
             }
@@ -43,7 +43,7 @@ namespace FoodTruckTracker.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 ViewBag.country = "";
-                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/home");
+                HttpResponseMessage response = await client.GetAsync("http://localhost:44312/foodtrucktracker/home");
 
                 return View();
             }

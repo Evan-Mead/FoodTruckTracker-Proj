@@ -19,6 +19,7 @@ namespace FoodTruckTracker.Models
         public string CuisineType { get; set; }
         public string TruckHistory { get; set; }
         public string TruckCrew { get; set; }
+        public List<Review> Reviews { get; set; }
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
